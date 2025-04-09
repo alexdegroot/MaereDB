@@ -1,2 +1,2 @@
-# Talex
-An experimental distributed database engine for learning purposes
+# MaereDB
+An experimental distributed database engine for learning purposes.
