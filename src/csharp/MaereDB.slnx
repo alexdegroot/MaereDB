@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="MaereDb.Engine.QueryParser/MaereDb.Engine.QueryParser.csproj" />
-  <Project Path="MaereDb.Tests.Examples/MaereDb.Tests.Examples.csproj" />
-  <Project Path="MaereDb.Tests.InnerCircle/MaereDb.Tests.InnerCircle.csproj" />
+  <Project Path="MaereDb.Engine.QueryParser.Tests/MaereDb.Engine.QueryParser.Tests.csproj" />
 </Solution>

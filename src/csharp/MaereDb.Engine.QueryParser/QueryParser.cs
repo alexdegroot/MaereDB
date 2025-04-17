@@ -1,33 +1,11 @@
-﻿namespace MaereDb.Engine.QueryParser;
+﻿using MaereDb.Engine.QueryParser.Aqt;
 
-public class QueryParser
+namespace MaereDb.Engine.QueryParser;
+
+public class Parser
 {
-        public IList<IStatement> Parse(ReadOnlySpan<char> sql)
-        {
-            if(sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
-            {
-                return ParseSelect(sql);
-            }
-            else
-            {
-                throw new NotSupportedException($"SQL statement not supported: {sql.ToString()}");
-            }
-        }
-
-        public IList<IStatement> ParseSelect(ReadOnlySpan<char> sql)
-        {
-            return new [] { new  SelectStatement() };
-        }
+    public IList<IStatement> Parse(ReadOnlySpan<char> sql)
+    {
+        throw new NotImplementedException();
+    }
 }
-
-public interface IStatement
-{
-
-}
-
-public class SelectStatement : IStatement
-{
-}
-
-
-
