@@ -27,7 +27,7 @@ internal ref struct Tokenizer
         return tokens;
     }
 
-    private Token NextToken()
+    public Token NextToken()
     {
         if (position >= sql.Length)
             return new Token(string.Empty, TokenType.EndOfInput);
@@ -69,7 +69,7 @@ internal ref struct Tokenizer
         return new Token(sql.Slice(start, position - start).ToString(), TokenType.Number);
     }
 
-    internal ReadOnlySpan<char> PeekTakeWhile(Func<char, bool> predicate)
+    private ReadOnlySpan<char> PeekTakeWhile(Func<char, bool> predicate)
     {
         var start = position;
 
@@ -81,14 +81,27 @@ internal ref struct Tokenizer
         return sql.Slice(start, position - start);
     }
 
-    internal readonly bool NotTheEnd() => position < sql.Length;
+    private readonly bool NotTheEnd() => position < sql.Length;
 
-    private static readonly Dictionary<string, TokenType> _keywords = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly Dictionary<string, Keyword> _keywords = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["select"] = TokenType.Keyword,
-        ["from"] = TokenType.Keyword,
-        ["where"] = TokenType.Keyword,
-        ["as"] = TokenType.Keyword
+        ["select"] = Keyword.Select,
+        ["insert"] = Keyword.Insert,
+        ["update"] = Keyword.Update,
+        ["delete"] = Keyword.Delete,
+        ["create"] = Keyword.Create,
+        ["drop"] = Keyword.Drop,
+        ["alter"] = Keyword.Alter,
+        ["table"] = Keyword.Table,
+        ["column"] = Keyword.Column,
+        ["index"] = Keyword.Index,
+        ["view"] = Keyword.View,
+        ["join"] = Keyword.Join,
+        ["inner join"] = Keyword.InnerJoin,
+        ["left join"] = Keyword.LeftJoin,
+        ["right join"] = Keyword.RightJoin,
+        ["full join"] = Keyword.FullJoin,
+        ["cross join"] = Keyword.CrossJoin
     };
     private readonly Func<char, bool> IdentifierPredicate = c => char.IsLetterOrDigit(c) || c is '$' or '_';
 
@@ -99,7 +112,7 @@ internal ref struct Tokenizer
 
         if (_keywords.TryGetValue(identifier, out var tokenType))
         {
-            return new Token(identifier, tokenType);
+            return new KeywordToken(identifier, tokenType);
         }
 
         return new Token(identifier, TokenType.Identifier);
